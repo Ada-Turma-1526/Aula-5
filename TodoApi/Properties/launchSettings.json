@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "TodoApi": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "api/todo",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:443;http://localhost:13397"
+    }
+  }
+}
