@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 using System;
 using System.IO;
 using System.Reflection;
-using TodoApi.Repositories;
 using TodoApi.Filters;
-using Microsoft.OpenApi;
+using TodoApi.Middlewares;
+using TodoApi.Repositories;
 
 namespace TodoApi
 {
@@ -16,6 +17,8 @@ namespace TodoApi
             const string CORS_NAME = "PoliticaPermissiva";
 
             var builder = WebApplication.CreateBuilder();
+
+            builder.Services.Configure<MaintenantanceOptions>(builder.Configuration.GetSection(MaintenantanceOptions.MaintenantanceSection));
 
             // Controllers + global exception filter
             builder.Services.AddControllers(opt =>
@@ -50,6 +53,7 @@ namespace TodoApi
             }));
                 
             var app = builder.Build();
+            app.UseMiddleware<MaintenanceMiddleware>();
 
             app.UseCors(CORS_NAME);
             app.UseSwagger();
@@ -57,8 +61,11 @@ namespace TodoApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
             });
-
             app.MapControllers();
+
+            // Configurando Middlewares
+            // UseXXXXX
+            // MapXXXXX 
             app.Run();
         }
     }
