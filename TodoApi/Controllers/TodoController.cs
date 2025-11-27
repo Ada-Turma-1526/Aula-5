@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using TodoApi.Models;
 using TodoApi.Repositories;
 
@@ -28,9 +29,9 @@ namespace TodoApi.Controllers
         /// <response code="200">A Requisição foi bem-sucedida e a resposta contém a lista de tarefas</response>
         [HttpGet("/api/todo")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Todo>))]
-        public IActionResult GetAllTodos()
+        public async Task<IActionResult> GetAllTodos()
         {
-            return Ok(todoRepository.GetAll());
+            return Ok(await todoRepository.GetAll());
         }
 
         /// <summary>

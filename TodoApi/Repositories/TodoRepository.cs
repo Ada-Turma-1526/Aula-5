@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TodoApi.Models;
 
 namespace TodoApi.Repositories
@@ -13,9 +13,9 @@ namespace TodoApi.Repositories
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<Todo> GetAll()
+        public Task<IEnumerable<Todo>> GetAll()
         {
-            return dbContext.Todos;
+            return Task.FromResult(dbContext.Todos.AsEnumerable());
         }
 
         public Todo GetById(int id)
